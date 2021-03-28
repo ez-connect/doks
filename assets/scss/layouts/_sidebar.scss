@@ -108,3 +108,37 @@ a.docs-link {
 .page-links h3.sidebar-link a:hover {
   text-decoration: underline;
 }
+
+// Freemind
+.docs-links {
+  display: block !important;
+
+  a {
+    padding: .1875rem .5rem;
+    margin-top: .125rem;
+    margin-left: 1.25rem;
+    color: rgba($black, .65);
+    text-decoration: if($link-decoration == none, null, none);
+  }
+
+  .docs-links-group {
+    font-weight: 600;
+
+    // Add chevron if there's a submenu
+    &::before {
+      width: 1.25em;
+      line-height: 0; // Align in the middle
+      content: escape-svg($sidebar-collapse-icon);
+      @include transition(transform .35s ease);
+      transform-origin: .5em 50%;
+    }
+
+    &[aria-expanded="true"] {
+      color: rgba($black, .85);
+
+      &::before {
+        transform: rotate(90deg);
+      }
+    }
+  }
+}

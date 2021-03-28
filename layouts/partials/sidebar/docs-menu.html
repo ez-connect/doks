@@ -1,13 +1,64 @@
 {{ $currentPage := . -}}
-{{ range .Site.Menus.docs -}}
-  <h3>{{ .Name }}</h3>
-  {{ if .HasChildren -}}
-  <ul class="list-unstyled">
-    {{ range .Children -}}
-      {{- $active := or ($currentPage.IsMenuCurrent "docs" .) ($currentPage.HasMenuCurrent "docs" .) -}}
-      {{- $active = or $active (eq $currentPage.Section .Identifier) -}}
-      <li><a class="docs-link{{ if $active }} active{{ end }}" href="{{ .URL | absURL }}">{{ .Name }}</a></li>
-    {{ end -}}
-  </ul>
-  {{ end -}}
-{{ end -}}
+
+<ul class="list-unstyled mb-0 py-3 pt-md-1">
+  {{ range $group := .Site.Menus.docs -}}
+    {{ if $group.HasChildren }}
+      {{ $isGroupActive := eq $group.Identifier $currentPage.Params.menu.docs.parent }}
+      <li class="mb-1">
+        <button
+          class="docs-links-group btn btn-link align-items-center"
+          data-bs-toggle="collapse"
+          data-bs-target="#{{ $group.Name }}-collapse"
+          {{ if $isGroupActive }}aria-expanded="true"{{ end }}
+        >
+          {{ $group.Name }}
+        </button>
+
+        <div
+          class="collapse{{ if $isGroupActive }} show{{ end }}"
+          id="{{ $group.Name }}-collapse"
+        >
+          <ul class="list-unstyled fw-normal pb-1 small">
+            {{ range $group.Children }}
+              {{ $active := eq $currentPage.URL .URL }}
+              <li>
+                <a
+                  class="docs-link{{ if $active }} active{{ end }}"
+                  href="{{ .URL | absURL }}">
+                  {{ .Name }}
+                </a>
+            </li>
+            {{ end }}
+
+          </ul>
+        </div>
+      </li>
+    {{ else }}
+      xxxx
+    {{ end }}
+  {{ end }}
+
+</ul>
+
+<script>
+  function collapse() {
+    const elements = document.querySelectorAll('button[data-bs-toggle=collapse]');
+    for (const e of elements) {
+      e.addEventListener('click', () => {
+        // Hide all
+        const elements = document.querySelectorAll('button[data-bs-toggle=collapse]');
+        for (const e of elements) {
+          e.removeAttribute('aria-expanded');
+          const child = document.querySelector(e.getAttribute('data-bs-target'));
+          child.classList.remove('show');
+        }
+
+        // Show current
+        const child = document.querySelector(e.getAttribute('data-bs-target'));
+        child.classList.add('show');
+      });
+    }
+  };
+
+  collapse();
+</script>
