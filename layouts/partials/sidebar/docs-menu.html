@@ -6,7 +6,7 @@
       {{ $isGroupActive := eq $group.Identifier $currentPage.Params.menu.docs.parent }}
       <li class="mb-1">
         <button
-          class="docs-links-group btn btn-link align-items-center"
+          class="d-inline-flex btn btn-link align-items-center"
           data-bs-toggle="collapse"
           data-bs-target="#{{ $group.Name }}-collapse"
           {{ if $isGroupActive }}aria-expanded="true"{{ end }}

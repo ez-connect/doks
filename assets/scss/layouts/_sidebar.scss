@@ -121,9 +121,8 @@ a.docs-link {
     text-decoration: if($link-decoration == none, null, none);
   }
 
-  .docs-links-group {
+  .btn {
     font-weight: 600;
-    display: flex;
 
     // Add chevron if there's a submenu
     &::before {
@@ -131,7 +130,6 @@ a.docs-link {
       line-height: 0; // Align in the middle
       content: escape-svg($sidebar-collapse-icon);
       @include transition(transform .35s ease);
-      transform-origin: .5em 50%;
     }
 
     &[aria-expanded="true"] {
