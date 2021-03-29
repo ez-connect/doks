@@ -54,6 +54,7 @@
         }
 
         // Show current
+        e.setAttribute('aria-expanded', true);
         const child = document.querySelector(e.getAttribute('data-bs-target'));
         child.classList.add('show');
       });

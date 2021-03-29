@@ -123,6 +123,7 @@ a.docs-link {
 
   .docs-links-group {
     font-weight: 600;
+    display: flex;
 
     // Add chevron if there's a submenu
     &::before {
